@@ -67,6 +67,10 @@ export class OrderLine {
   public static create(orderId: string, sku: string, qty: number): OrderLine {
     return new OrderLine(orderId, sku, qty);
   }
+
+  public equalTo(line: OrderLine): boolean {
+    return (this.orderId === line.orderId && this.qty === line.qty && this.sku === line.sku);
+  }
 }
 
 
@@ -81,9 +85,14 @@ export class Batch {
     readonly eta?: Date
   ) {
     this.purchasedQuantity = qty;
+    this.allocations = [];
   }
 
   public allocate(line: OrderLine): void {
+    const exists = this.allocations.filter(item => line.equalTo(item));
+    if (exists.length > 0)
+      return;
+
     if (this.canAllocate(line)) {
       this.allocations.push(line);
     }
