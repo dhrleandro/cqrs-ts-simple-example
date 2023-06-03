@@ -7,7 +7,7 @@ export default class AllocateController extends BaseController {
     super();
   }
 
-  public async handle(request: Request, response: Response): Promise<any> {
-    return response.json({ message: "AllocateController - Hello TS - Path Mapping 🚀" });
+  public async handle(request: Request, response: Response): Promise<void> {
+    response.json({ message: "AllocateController - Hello TS - Path Mapping 🚀" });
   }
 }
